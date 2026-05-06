@@ -1,120 +1,94 @@
-# HelpDesk — Applicazione console per la gestione dei ticket
+# Segnalazioni — Gestione console delle segnalazioni del comune
 
-Una semplice applicazione Java a riga di comando che implementa un sistema di Help Desk / gestione ticket. Legge i ticket da un file CSV, carica i ticket validi in memoria e fornisce un menu interattivo in console per cercare, filtrare, visualizzare, modificare e correggere ticket malformati.
+Applicazione Java a riga di comando per la gestione di segnalazioni comunali. Legge segnalazioni da un file CSV, mantiene i record in memoria, permette ricerche e filtri, consente di modificare lo stato delle segnalazioni e di aggiungerne di nuove salvando sul file.
 
-Questo progetto è indicato come esercizio didattico per apprendere I/O su file, enum, progettazione orientata agli oggetti e interazione console in Java.
+Il progetto è pensato come esempio didattico per I/O su file, enum, programmazione orientata agli oggetti e interazione tramite console in Java.
 
-## Funzionalità
-- Caricamento dei ticket da un file CSV
-- Visualizzazione di tutti i ticket con i dettagli
-- Ricerca ticket per utente, parola nella descrizione o prefisso del codice
-- Visualizzazione dei ticket aperti (APERTO o IN_LAVORAZIONE)
-- Filtraggio dei ticket per priorità o stato
-- Calcolo delle ore stimate totali per i ticket aperti e conteggio dei ticket aperti
-- Cambio dello stato di un ticket
-- Visualizzazione dei ticket non assegnati
-- Rilevamento di righe malformate durante l'import CSV e possibilità di correggerle interattivamente
+## Funzionalità principali
+- Caricamento delle segnalazioni da file CSV
+- Visualizzazione di tutte le segnalazioni
+- Ricerca per cittadino, parola nella descrizione o prefisso del codice
+- Visualizzazione delle segnalazioni aperte e urgenti
+- Filtri per categoria, zona e stato
+- Calcolo del totale dei giorni aperti e conteggio delle segnalazioni aperte
+- Cambio di stato di una segnalazione con aggiornamento del file CSV
+- Inserimento di nuove segnalazioni (append sul CSV)
 
 ## Requisiti
-- Java 8 o superiore (JDK installato)
-- Facoltativo: IDE come Eclipse (il progetto è strutturato per Eclipse)
-- L'applicazione richiede un file CSV contenente i dati dei ticket (è incluso un esempio: `ticket.csv`).
+- Java 8 o successivo (JDK installato)
+- Facoltativo: IDE come Eclipse
 
-## Struttura rilevante del repository
-- `src/helpdesk/Start.java` — punto di ingresso del programma
-- `src/helpdesk/Menu.java` — interfaccia console e ciclo del menu principale
-- `src/helpdesk/TicketService.java` — logica dell'applicazione e caricamento CSV
-- `src/helpdesk/Ticket.java` — modello Ticket (estende `Richiesta`)
-- `src/helpdesk/Richiesta.java` — modello base della richiesta
-- `src/helpdesk/Priorita.java`, `src/helpdesk/StatoTicket.java` — enum per priorità e stato
-- `ticket.csv` — dataset di esempio usato per caricare i ticket
+## File CSV atteso
+Il programma si aspetta un file CSV con 10 colonne nell'ordine seguente (senza spazi aggiuntivi tra le virgole):
 
-## Formato del file CSV
-Il CSV deve contenere una riga di intestazione e poi una riga per ogni ticket con le colonne ordinate così:
+id,codice,cittadino,zona,descrizione,categoria,priorita,stato,giorniAperti,urgente
 
-id,codice,utente,reparto,descrizione,priorita,stato,oreStimate,assegnato
+- id: stringa (identificativo univoco)
+- codice: codice della segnalazione (es. SEG-STR-01)
+- cittadino: nome del segnalante
+- zona: area/indirizzo della segnalazione
+- descrizione: testo descrittivo del problema
+- categoria: una delle enum: STRADE, ILLUMINAZIONE, RIFIUTI, VERDE_PUBBLICO, SICUREZZA, RUMORE
+- priorita: una delle enum: BASSA, MEDIA, ALTA, URGENTE
+- stato: una delle enum: APERTA, IN_LAVORAZIONE, RISOLTA, CHIUSA
+- giorniAperti: intero (giorni trascorsi da apertura)
+- urgente: boolean (`true` o `false`)
 
-- id: intero (positivo). Righe con id non valido o campi critici invalidi vengono classificate come "errate".
-- codice: stringa (codice del ticket)
-- utente: nome del richiedente (stringa)
-- reparto: reparto di riferimento (stringa)
-- descrizione: descrizione del problema (stringa)
-- priorita: uno dei valori enum: BASSA, MEDIA, ALTA, URGENTE
-- stato: uno dei valori enum: APERTO, IN_LAVORAZIONE, RISOLTO, CHIUSO
-- oreStimate: numero (double) che rappresenta le ore stimate
-- assegnato: boolean (`true` o `false`)
+Nota: il codice attuale usa `String.split(",")` per parsare il CSV. Se i campi (ad es. la descrizione) contengono virgole o sono quotati, lo split semplice potrebbe rompere le colonne. Per dati reali è consigliabile usare una libreria CSV robusta (OpenCSV o Apache Commons CSV).
 
-Attenzione: il parser CSV implementato nel progetto usa `String.split(",")`. Se i campi contengono virgole o sono quotati, lo split semplice potrebbe rompere i campi. Per un uso robusto in produzione si raccomanda una libreria CSV come OpenCSV o Apache Commons CSV.
-
-Nota: il file di esempio incluso (`ticket.csv`) può contenere descrizioni o testo non adatti alla pubblicazione pubblica. Controlla e pulisci i dati prima di condividerli pubblicamente.
-
-## Come compilare ed eseguire (da linea di comando)
-Dalla radice del progetto (`/path/to/HelpDesk`):
+## Come compilare ed eseguire da terminale
+Dalla cartella radice del progetto (`/home/cloud/git/SegnalazioniComune/Segnalazioni`):
 
 ```sh
 # creare la cartella bin e compilare
 mkdir -p bin
-javac -d bin src/helpdesk/*.java
+javac -d bin src/segnalazioni/*.java
 
-# eseguire (sostituire il percorso del CSV se necessario)
-java -cp bin helpdesk.Start ticket.csv
+# eseguire (sostituire path/to/file.csv con il percorso reale del CSV)
+java -cp bin segnalazioni.Segnalazioni path/to/file.csv
 ```
 
-La classe principale `Start` si aspetta esattamente un argomento in riga di comando: il percorso al file CSV.
+Esempio se il file CSV si trova nella root del progetto e si chiama `segnalazioni.csv`:
+
+```sh
+java -cp bin segnalazioni.Segnalazioni segnalazioni.csv
+```
+
+Il programma apre un menu interattivo in console. La classe `Segnalazioni` si aspetta come argomento il percorso del file CSV.
 
 ## Come eseguire in Eclipse
-1. Importa il progetto in Eclipse come progetto Java esistente oppure crea un nuovo progetto Java e copia la cartella `src`.
-2. Clic destro su `Start.java` → Run As → Run Configurations.
-3. Nella scheda Arguments, inserisci il percorso del file CSV in Program Arguments (es. `ticket.csv` se il file è nella root del progetto).
+1. Importa il progetto in Eclipse come "Existing Java Project" o crea un nuovo progetto Java e copia `src`.
+2. Crea una Run Configuration per la classe `segnalazioni.Segnalazioni`.
+3. Nella scheda Arguments → Program arguments, inserisci il percorso del file CSV (es. `segnalazioni.csv`).
 4. Avvia la configurazione.
 
-## Menu interattivo (riassunto)
-All'avvio il programma mostra un menu con opzioni come:
-- 1: Visualizza tutti i ticket
-- 2: Cerca ticket per utente
-- 3: Cerca ticket nella descrizione
-- 4: Cerca ticket per prefisso codice
-- 5: Visualizza ticket aperti
-- 6: Filtra ticket per priorità
-- 7: Filtra ticket per stato
-- 8: Conta totale ore stimate per ticket aperti
-- 9: Conta ticket aperti
-- 10: Cambia stato di un ticket
-- 11: Visualizza ticket non assegnati
-- 12: Visualizza ticket errati
-- 13: Correggi un ticket errato
-- 0: Esci
-
 ## Panoramica delle classi
-- Start
-  - `main(String[] args)`: avvia il programma creando `Menu` con `TicketService`
-- Menu
-  - gestisce l'interazione con l'utente e il ciclo del menu
-- TicketService
-  - carica i ticket dal CSV (`aggiungiDaCsv()`), mantiene le liste `tickets` e `errati` e fornisce metodi di ricerca, filtro, modifica e correzione
-- Ticket (estende Richiesta)
-  - campi: `codice`, `reparto`, `priorita`, `stato`, `oreStimate`, `assegnato` e validazioni nei setter
-- Richiesta
-  - campi base: `id`, `utente`, `descrizione`
-- Priorita
-  - enum: `BASSA, MEDIA, ALTA, URGENTE`
-- StatoTicket
-  - enum: `APERTO, IN_LAVORAZIONE, RISOLTO, CHIUSO`
+- `Segnalazioni` — classe `main` che avvia il menu
+- `Menu` — interfaccia console e ciclo principale
+- `ComuneService` — logica di caricamento, ricerca, filtraggio, modifica e salvataggio delle segnalazioni
+- `Segnalazione` — modello della segnalazione (estende `Richiesta`)
+- `Richiesta` — classe base con campi comuni (id, cittadino, descrizione)
+- `CategoriaSegnalazione`, `Priorita`, `StatoSegnalazione` — enum per categorie, priorità e stato
 
-## Note su gestione errori e limiti
-- Il caricamento CSV non gestisce campi quotati o con virgole interne (usare una libreria CSV per casi reali).
-- Le righe con campi critici non validi vengono messe nella lista `errati` e possono essere corrette con l'opzione 13 del menu.
-- L'applicazione usa `Scanner` per input da console; per uso non interattivo si potrebbe aggiungere una modalità batch o test automatizzati.
+## Dettagli implementativi importanti
+- `ComuneService.aggiungiDaCsv()` legge tutte le righe e costruisce oggetti `Segnalazione` solo se la riga contiene esattamente 10 colonne.
+- `ComuneService.cambiaStatoSegnalazione()` aggiorna il file leggendo tutte le righe in memoria e riscrivendole sostituendo il campo `stato` per la segnalazione modificata.
+- `ComuneService.aggiungiSegnalazione()` aggiunge la nuova segnalazione alla lista in memoria e la appende al file CSV con modalità append (`FileWriter(path, true)`).
 
-## Miglioramenti suggeriti
-- Sostituire lo split semplice con un parser CSV robusto (OpenCSV / Apache Commons CSV).
-- Salvare le modifiche su file (persistenza) oppure usare un database leggero.
-- Aggiungere test unitari per `TicketService` e le sue funzioni.
-- Migliorare la generazione degli ID per evitare collisioni quando si correggono ticket errati.
-- Aggiungere logging strutturato invece di stampe su stdout.
+## Limitazioni e suggerimenti di miglioramento
+- Usa un parser CSV robusto (OpenCSV o Apache Commons CSV) per gestire campi con virgole e campi quotati.
+- Aggiungi validazione più rigorosa sui campi in ingresso (es. formati, enum non validi).
+- Gestione degli errori: attualmente si stampano stacktrace su console; si potrebbe introdurre logging strutturato (SLF4J + Logback) e messaggi utente più chiari.
+- Aggiungere test unitari per `ComuneService` e le operazioni di I/O.
+- Considerare una persistenza più solida (database o file JSON) per evitare problemi di concorrenza o corruzione del CSV.
 
-## Contribuire
-Se vuoi contribuire, apri issue o pull request. Suggerimenti per contribuire:
-- Includi test per le nuove funzionalità
-- Mantieni le modifiche piccole e documentate
-- Aggiorna il README se introduci nuove dipendenze o comportamenti
+## Esempio di uso del menu (opzioni principali)
+- Visualizza tutte le segnalazioni
+- Cerca segnalazione per cittadino
+- Cerca per parola chiave nella descrizione
+- Cerca per prefisso codice
+- Visualizza aperte / urgenti
+- Filtra per categoria / zona / stato
+- Calcola totale giorni aperti
+- Cambia stato di una segnalazione (aggiorna il CSV)
+- Inserisci nuova segnalazione (salva sul CSV)
