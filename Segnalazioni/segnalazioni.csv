@@ -1,0 +1,23 @@
+1,SEG-STR-001,Marco Rossi,Centro,Buca profonda vicino alla scuola,STRADE,ALTA,APERTA,5,true
+2,SEG-ILL-002,Anna Bianchi,San Paolo,Lampione spento da diversi giorni,ILLUMINAZIONE,MEDIA,IN_LAVORAZIONE,8,false
+3,SEG-RIF-003,Luca Verdi,Libertà,Rifiuti abbandonati vicino al mercato,RIFIUTI,ALTA,APERTA,3,true
+4,SEG-VER-004,Giulia Neri,Carrassi,Albero caduto nel parco,VERDE_PUBBLICO,URGENTE,IN_LAVORAZIONE,2,true
+5,SEG-RUM-005,Marco Rossi,Murat,Rumore notturno da locale,RUMORE,MEDIA,APERTA,10,false
+6,SEG-SIC-006,Paolo Gialli,Centro,Attraversamento pedonale pericoloso,SICUREZZA,ALTA,APERTA,6,true
+7,SEG-STR-007,Sara Romano,Poggiofranco,Marciapiede danneggiato,STRADE,MEDIA,RISOLTA,12,false
+8,SEG-ILL-008,Luca Verdi,Picone,Lampioni intermittenti in via principale,ILLUMINAZIONE,BASSA,CHIUSA,15,false
+9,SEG-RIF-009,Anna Bianchi,San Paolo,Cassonetti pieni da giorni,RIFIUTI,ALTA,APERTA,4,true
+10,SEG-VER-010,Federico Conti,Japigia,Area giochi non curata,VERDE_PUBBLICO,MEDIA,RISOLTA,9,false
+11,SEG-RUM-011,Giulia Neri,Centro,Schiamazzi notturni frequenti,RUMORE,MEDIA,APERTA,7,false
+12,SEG-SIC-012,Marco Rossi,Libertà,Segnaletica stradale mancante,SICUREZZA,ALTA,IN_LAVORAZIONE,5,true
+13,SEG-STR-013,Elena Marino,Carrassi,Strada dissestata dopo lavori,STRADE,URGENTE,APERTA,2,true
+14,SEG-ILL-014,Paolo Gialli,Murat,Lampione rotto vicino fermata bus,ILLUMINAZIONE,ALTA,APERTA,6,true
+15,SEG-RIF-015,Sara Romano,Picone,Rifiuti ingombranti sul marciapiede,RIFIUTI,MEDIA,CHIUSA,11,false
+16,SEG-VER-016,Luca Verdi,San Paolo,Erba alta vicino alla scuola,VERDE_PUBBLICO,BASSA,APERTA,13,false
+17,SEG-RUM-017,Anna Bianchi,Centro,Musica alta dopo mezzanotte,RUMORE,ALTA,RISOLTA,4,false
+18,SEG-SIC-018,Federico Conti,Libertà,Incrocio senza visibilità,SICUREZZA,URGENTE,IN_LAVORAZIONE,3,true
+19,SEG-STR-019,Elena Marino,Poggiofranco,Buca su strada principale,STRADE,ALTA,APERTA,5,true
+20,SEG-RIF-020,Marco Rossi,San Paolo,Sacchi abbandonati vicino ai giardini,RIFIUTI,MEDIA,APERTA,6,false
+21,SEG-VER-021,Lello Sbronzo,Bisceglie,Piantagione di erba,VERDE_PUBBLICO,ALTA,IN_LAVORAZIONE,3,true
+22,SEG-STR-022,Ciccio Cagone,Sterpeto,Strada smerdata,STRADE,BASSA,APERTA,2,false
+23,SEG-SIC-023,Pippo Baudo,Carrassi,Schiamazzi dei deficienti con le bici elettriche,SICUREZZA,BASSA,APERTA,3,false
